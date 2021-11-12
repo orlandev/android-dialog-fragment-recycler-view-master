@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -27,7 +28,6 @@ public class MyDialogFragment extends DialogFragment {
 
             View view = getLayoutInflater().inflate(R.layout.item_recycler_view, parent, false);
 
-
             return new ViewHolder(view);
             //return new ViewHolder(getLayoutInflater().inflate(R.layout.item_recycler_view, parent, false));
 
@@ -35,7 +35,11 @@ public class MyDialogFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.tv.setText(String.format(Locale.getDefault(), "I am item %d", position));
+            String value = String.format(Locale.getDefault(), "I am item %d", position);
+            holder.tv.setText(value);
+            holder.tv.setOnClickListener(v -> {
+                Toast.makeText(v.getContext(), value, Toast.LENGTH_SHORT).show();
+            });
         }
 
         @Override
@@ -63,9 +67,9 @@ public class MyDialogFragment extends DialogFragment {
     }
 
 
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tv;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.tv = itemView.findViewById(R.id.rv_text_view);
